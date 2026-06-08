@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Weiterleitung...</title>
+  <script>
+    // GitHub Pages SPA-Redirect
+    // Leitet /leistungen → /?p=/leistungen weiter, damit index.html es abfangen kann
+    var seg = 1;
+    var l = window.location;
+    var path = l.pathname.slice(1).split('/').slice(seg).join('/');
+    if (path) {
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + seg).join('/') + '/?p=/' +
+        path + (l.search ? '&q=' + l.search.slice(1) : '') +
+        l.hash
+      );
+    } else {
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/' + (l.search ? l.search : '') + l.hash
+      );
+    }
+  </script>
+</head>
+<body>
+  <p>Weiterleitung...</p>
+</body>
+</html>
