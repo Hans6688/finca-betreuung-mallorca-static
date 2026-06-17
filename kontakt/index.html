@@ -78,7 +78,7 @@
         </div>
 
         <div class="fade-in" id="kontakt-form-wrap">
-          <form id="kontakt-form" style="display:flex;flex-direction:column;gap:20px;">
+          <form id="kontakt-form" name="kontakt" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" style="display:flex;flex-direction:column;gap:20px;">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
               <div>
                 <label style="display:block;font-size:.7rem;font-weight:700;color:#070707;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Vorname</label>
@@ -164,7 +164,7 @@
       </div>
       <div class="footer-bottom">
         <p>&copy; 2026 Swiderski Property Management. Alle Rechte vorbehalten.</p>
-        <div class="footer-bottom-links"><a href="../impressum/">Impressum</a><a href="../datenschutz/">Datenschutzerklärung</a></div>
+        <div class="footer-bottom-links"><a href="../impressum/">Impressum</a><a href="../datenschutz/">Datenschutzerklärung</a><a href="../agb/">AGB</a></div>
       </div>
     </div>
   </footer>
@@ -176,8 +176,9 @@
   <script>
     document.getElementById("kontakt-form").addEventListener("submit", function(e) {
       e.preventDefault();
-      var nachname = this.querySelector('[name="nachname"]').value.trim();
-      var email = this.querySelector('[name="email"]').value.trim();
+      var form = this;
+      var nachname = form.querySelector('[name="nachname"]').value.trim();
+      var email = form.querySelector('[name="email"]').value.trim();
       var errEl = document.getElementById("form-error");
       if (!nachname || !email) {
         errEl.textContent = "Bitte füllen Sie alle Pflichtfelder aus.";
@@ -185,19 +186,23 @@
         return;
       }
       errEl.style.display = "none";
-      var anliegen = Array.from(this.querySelectorAll('[name="anliegen"]:checked')).map(function(el){return el.value;}).join(", ");
-      var rolle = (this.querySelector('[name="rolle"]:checked') || {}).value || "";
-      var betreff = this.querySelector('[name="betreff"]').value.trim();
-      var message = this.querySelector('[name="message"]').value.trim();
-      var body = [anliegen ? "Anliegen: " + anliegen : "", rolle ? "Ich bin: " + rolle : "", betreff ? "Betreff: " + betreff : "", message].filter(Boolean).join("\n");
-      var vorname = this.querySelector('[name="vorname"]').value.trim();
-      var name = (vorname + " " + nachname).trim();
-      var phone = this.querySelector('[name="phone"]').value.trim();
-      var ort = this.querySelector('[name="ort"]').value.trim();
-      var mailto = "mailto:info@swiderskipropertymanagement.com?subject=" + encodeURIComponent("Anfrage von " + name) + "&body=" + encodeURIComponent("Name: " + name + "\nE-Mail: " + email + (phone ? "\nTelefon: " + phone : "") + (ort ? "\nOrt: " + ort : "") + "\n\n" + body);
-      window.location.href = mailto;
-      document.getElementById("kontakt-form").style.display = "none";
-      document.getElementById("form-success").style.display = "block";
+      var submitBtn = form.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Wird gesendet…";
+      var data = new FormData(form);
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(data).toString()
+      }).then(function() {
+        form.style.display = "none";
+        document.getElementById("form-success").style.display = "block";
+      }).catch(function(err) {
+        errEl.textContent = "Fehler beim Senden. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt an info@swiderskipropertymanagement.com";
+        errEl.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Senden";
+      });
     });
   </script>
 </body>
