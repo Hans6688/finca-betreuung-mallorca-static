@@ -55,11 +55,11 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 768px) { .nav-links { display: none; } .nav-hamburger { display: flex; } }
 
 /* HERO FULL */
-.hero-full { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; overflow: hidden; }
+.hero-full { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: flex-start; overflow: hidden; }
 .hero-full .hero-bg { position: absolute; inset: 0; }
 .hero-full .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
 .hero-full .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(7,7,7,0.75) 0%, rgba(7,7,7,0.3) 100%); }
-.hero-full .hero-content { position: relative; z-index: 1; padding-top: 72px; }
+.hero-full .hero-content { position: relative; z-index: 1; padding-top: 160px; padding-bottom: 80px; display: flex; align-items: center; height: 100%; }
 .hero-full h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; color: #fff; line-height: 1.05; margin-bottom: 24px; }
 .hero-full .hero-sub { color: rgba(255,255,255,0.85); font-size: 1.1rem; max-width: 520px; line-height: 1.7; margin-bottom: 36px; }
 .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
