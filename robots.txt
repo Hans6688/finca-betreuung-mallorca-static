@@ -3,5 +3,6 @@ Allow: /
 
 Disallow: /impressum
 Disallow: /datenschutz
+Disallow: /agb
 
 Sitemap: https://finca-betreuung-mallorca.com/sitemap.xml
