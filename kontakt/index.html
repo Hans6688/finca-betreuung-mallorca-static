@@ -105,6 +105,8 @@
 
         <div class="fade-in" id="kontakt-form-wrap">
           <form id="kontakt-form" name="kontakt" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" style="display:flex;flex-direction:column;gap:20px;">
+            <input type="hidden" name="form-name" value="kontakt">
+            <p style="display:none;"><label>Nicht ausfüllen: <input name="bot-field"></label></p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
               <div>
                 <label style="display:block;font-size:.7rem;font-weight:700;color:#070707;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Vorname</label>
